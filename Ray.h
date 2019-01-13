@@ -9,7 +9,7 @@ public:
 
 	~Ray(){}
 
-	Vector3f evaluate(float t) { return o + t * d; }
+	Vector3f evaluate(float t) const { return o + t * d; }
 	Vector3f o, d;
 };
 

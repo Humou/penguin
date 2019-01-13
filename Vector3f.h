@@ -40,10 +40,6 @@ public:
 	}
 
 	Vector3f operator/(const Vector3f &rhs) const {
-		/*if (rhs.x == 0 || rhs.y == 0 || rhs.z == 0) {
-		std::cout << "Vector3f operator/(const Vector3f &rhs): divided by zero"<<std::endl;
-		return Vector3f();
-		}*/
 		return Vector3f(x / rhs.x, y / rhs.y, z / rhs.z);
 	}
 
@@ -53,6 +49,16 @@ public:
 		z /= rhs.z;
 
 	}
+
+	float lengthSquared() const;
+	float length() const;
+	
+	//static fuction
+	static Vector3f normalize(const Vector3f &a);
+
+	static float dot(const Vector3f &a, const Vector3f &b);
+	static Vector3f cross(const Vector3f &a, const Vector3f &b);
+
 	float x, y, z;
 };
 
@@ -61,11 +67,5 @@ Vector3f operator*(float v, const Vector3f &rhs);
 
 Vector3f operator/(const Vector3f &lhs, float v);
 Vector3f operator/(float v, Vector3f &rhs);
-
-float lengthSquared(const Vector3f &a);
-float length(const Vector3f &a);
-
-float dot(const Vector3f &a, const Vector3f &b);
-Vector3f cross(const Vector3f &a, const Vector3f &b);
 
 std::ostream& operator<<(std::ostream &out, const Vector3f &a);

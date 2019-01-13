@@ -36,10 +36,16 @@
     <ClCompile Include="Vector3f.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Shape.cpp">
+    <ClCompile Include="IntersectInfo.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="IntersectInfo.cpp">
+    <ClCompile Include="Sphere.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Surface.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Aggregate.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -62,10 +68,16 @@
     <ClInclude Include="Vector3f.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Shape.h">
+    <ClInclude Include="IntersectInfo.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="IntersectInfo.h">
+    <ClInclude Include="Sphere.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Surface.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Aggregate.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
