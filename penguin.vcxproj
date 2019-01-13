@@ -68,7 +68,11 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)output\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>output\obj\$(Platform)\$(Configuration)\</IntDir>
+    <IncludePath>.\surface;.\other;.\algebra;$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -110,29 +114,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Aggregate.cpp" />
-    <ClCompile Include="IntersectInfo.cpp" />
-    <ClCompile Include="lodepng.cpp" />
+    <ClCompile Include="surface\Aggregate.cpp" />
+    <ClCompile Include="surface\IntersectInfo.cpp" />
+    <ClCompile Include="other\lodepng.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Mat4.cpp" />
-    <ClCompile Include="pg_utility.cpp" />
-    <ClCompile Include="Ray.cpp" />
-    <ClCompile Include="Scene.cpp" />
-    <ClCompile Include="Surface.cpp" />
-    <ClCompile Include="Sphere.cpp" />
-    <ClCompile Include="Vector3f.cpp" />
+    <ClCompile Include="algebra\Mat4.cpp" />
+    <ClCompile Include="algebra\Ray.cpp" />
+    <ClCompile Include="surface\Scene.cpp" />
+    <ClCompile Include="surface\Surface.cpp" />
+    <ClCompile Include="surface\Sphere.cpp" />
+    <ClCompile Include="algebra\Vector3f.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Aggregate.h" />
-    <ClInclude Include="IntersectInfo.h" />
-    <ClInclude Include="lodepng.h" />
-    <ClInclude Include="Mat4.h" />
-    <ClInclude Include="pg_utility.h" />
-    <ClInclude Include="Ray.h" />
-    <ClInclude Include="Scene.h" />
-    <ClInclude Include="Surface.h" />
-    <ClInclude Include="Sphere.h" />
-    <ClInclude Include="Vector3f.h" />
+    <ClInclude Include="surface\Aggregate.h" />
+    <ClInclude Include="surface\IntersectInfo.h" />
+    <ClInclude Include="other\lodepng.h" />
+    <ClInclude Include="algebra\Mat4.h" />
+    <ClInclude Include="algebra\Ray.h" />
+    <ClInclude Include="surface\Scene.h" />
+    <ClInclude Include="surface\Surface.h" />
+    <ClInclude Include="surface\Sphere.h" />
+    <ClInclude Include="algebra\Vector3f.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

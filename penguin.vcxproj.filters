@@ -15,69 +15,63 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="lodepng.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="pg_utility.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Ray.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Scene.cpp">
+    <ClCompile Include="surface\Aggregate.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Mat4.cpp">
+    <ClCompile Include="surface\IntersectInfo.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Vector3f.cpp">
+    <ClCompile Include="surface\Scene.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="IntersectInfo.cpp">
+    <ClCompile Include="surface\Sphere.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Sphere.cpp">
+    <ClCompile Include="surface\Surface.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Surface.cpp">
+    <ClCompile Include="other\lodepng.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Aggregate.cpp">
+    <ClCompile Include="algebra\Mat4.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="algebra\Ray.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="algebra\Vector3f.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="lodepng.h">
+    <ClInclude Include="surface\Aggregate.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="pg_utility.h">
+    <ClInclude Include="surface\IntersectInfo.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Ray.h">
+    <ClInclude Include="surface\Scene.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Scene.h">
+    <ClInclude Include="surface\Sphere.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Mat4.h">
+    <ClInclude Include="surface\Surface.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Vector3f.h">
+    <ClInclude Include="other\lodepng.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="IntersectInfo.h">
+    <ClInclude Include="algebra\Mat4.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Sphere.h">
+    <ClInclude Include="algebra\Ray.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Surface.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Aggregate.h">
+    <ClInclude Include="algebra\Vector3f.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
