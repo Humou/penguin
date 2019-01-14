@@ -1,3 +1,5 @@
+#include<random>
+
 #include"Ray.h"
 #include "Scene.h"
 #include"Sphere.h"
@@ -6,12 +8,8 @@
 
 Scene::Scene()
 {
-	image.resize(height);
-	for (int i = 0; i < image.size(); i++) {
-		image[i].resize(width);
-	}
 	aggregates = std::make_shared<Aggregate>();
-	std::shared_ptr<Surface> sphere = std::make_shared<Sphere>(Vector3f(0, 0, -0.3), 0.5);
+	std::shared_ptr<Surface> sphere = std::make_shared<Sphere>(Vector3f(0, 0, -0.18), 0.5);
 	aggregates->addSurface(sphere);
 }
 
@@ -21,19 +19,25 @@ Scene::~Scene()
 
 void Scene::render()
 {
-	//变换到[-1, 1]
+	std::default_random_engine e;
+	std::uniform_real_distribution<float> u(0, 1);
+	int ns = 10;
+	int width = camera.getWidth(), height = camera.getHeight();
+	//遍历所有像素，将像素点转换为对应的屏幕坐标，再将屏幕坐标变换到[-1, 1]
 	for(int y = 0; y < height; y++)
 		for (int x = 0; x < width; x++) {
-			float x0 = 2.0 / (width - 1) * x - 1.0;
-			float y0 = 2.0 / (height - 1) * y - 1.0;
-			float z0 = 0.0;
-			Vector3f origin(0, 0, 0.4);
-			Vector3f pos(x0, y0, z0);
-			Ray ray(origin, (pos - origin));
-			Vector3f color = rayTracer(ray);
-			image[y][x] = color;
+			Vector3f color;
+			//对同一个像素采样多个点
+			for (int i = 0; i < ns; i++) {
+				float r1 = 2 * u(e) - 1;
+				float r2 = 2 * u(e) - 1;
+				float s_x = (x + 0.5) + r1, s_y = (y + 0.5) + r2;
+				color += rayTracer(camera.generateRay(s_x, s_y));
+			}
+			camera.setPixel(y, x, color/ns);
 		}
-	//saveToImage("./sphere.png");
+
+	camera.saveToImage("./output/images/sphere.png");
 }
 
 Vector3f Scene::rayTracer(const Ray &ray)
@@ -49,24 +53,3 @@ Vector3f Scene::rayTracer(const Ray &ray)
 	}
 }
 
-void Scene::saveToImage(const std::string & fileName)
-{
-	unsigned char* data = new unsigned char[width * height * 4];
-	unsigned x, y;
-	for (y = 0; y < height; y++)
-		for (x = 0; x < width; x++) {
-			data[4 * width * y + 4 * x + 0] = unsigned char(image[height - 1 - y][x].x * 255);
-			data[4 * width * y + 4 * x + 1] = unsigned char(image[height - 1 - y][x].y * 255);
-			data[4 * width * y + 4 * x + 2] = unsigned char(image[height - 1 - y][x].z * 255);
-			data[4 * width * y + 4 * x + 3] = 255;
-		}
-
-	/*Encode the image*/
-	unsigned error = lodepng_encode32_file(fileName.c_str(), data, width, height);
-
-	/*if there's an error, display it*/
-	if (error) printf("error %u: %s\n", error, lodepng_error_text(error));
-
-	free(data);
-
-}

@@ -3,6 +3,7 @@
 #include<memory>
 #include<string>
 
+#include<Camera.h>
 #include<Surface.h>
 #include<Aggregate.h>
 
@@ -14,10 +15,8 @@ public:
 
 	void render();
 	Vector3f rayTracer(const Ray &ray);
-	void saveToImage(const std::string & fileName);
 private:
-	int width = 600, height = 400;
-	std::vector<std::vector<Vector3f>> image;
 	std::shared_ptr<Aggregate> aggregates;
+	Camera camera;
 };
 

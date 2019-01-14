@@ -114,6 +114,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="algebra\Camera.cpp" />
+    <ClCompile Include="CAMERA.CPP" />
     <ClCompile Include="surface\Aggregate.cpp" />
     <ClCompile Include="surface\IntersectInfo.cpp" />
     <ClCompile Include="other\lodepng.cpp" />
@@ -126,6 +128,7 @@
     <ClCompile Include="algebra\Vector3f.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="algebra\Camera.h" />
     <ClInclude Include="surface\Aggregate.h" />
     <ClInclude Include="surface\IntersectInfo.h" />
     <ClInclude Include="other\lodepng.h" />
