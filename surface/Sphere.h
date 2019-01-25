@@ -6,8 +6,8 @@
 class Sphere : public Surface
 {
 public:
-	Sphere(Vector3f c, float r)
-		: center(c), r(r){}
+	Sphere(Vector3f c, float r, std::shared_ptr<BRDF> brdf = std::make_shared<ModifiedPhong>(), bool isLightSource = false, const Vector3f &e = Vector3f())
+		: Surface(brdf, isLightSource, e), center(c), r(r){}
 
 	~Sphere();
 

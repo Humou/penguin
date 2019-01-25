@@ -2,14 +2,23 @@
 #include<memory>
 
 #include<Ray.h>
+#include<BRDF.h>
+#include<ModifiedPhong.h>
 #include<IntersectInfo.h>
 
 class Surface
 {
 public:
-	Surface();
+	Surface(std::shared_ptr<BRDF> brdf, bool isLightSource = false, const Vector3f &e = Vector3f());
 	virtual ~Surface();
 
 	virtual bool interect(const Ray &ray, std::shared_ptr<IntersectInfo> info) = 0;
+	std::shared_ptr<BRDF> getBRDF() { return brdf; }
+	bool isLight() { return isLightSource; }
+	Vector3f getEmision() { return e; }
+protected:
+	std::shared_ptr<BRDF> brdf;
+	bool isLightSource = false;
+	Vector3f e;
 };
 

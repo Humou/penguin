@@ -30,9 +30,15 @@ bool Sphere::interect(const Ray & ray, std::shared_ptr<IntersectInfo> info)
 
 	if (info->isValid & t >= info->t) return true;
 	//当前交点为最近交点或第一个交点，则需要改变info
+	info->p = ray.evaluate(t);
 	info->t = t;
 	info->isValid = true;
-	info->normal = Vector3f::normalize(center - ray.evaluate(t));
-
+	info->normal = (info->p - center);
+	info->normal.normalize();
+	if (isLight()) {
+		info->isLightSource = true;
+		info->e = getEmision();
+	}
+	brdf->sample(info->f, info->pdf, info->normal, Vector3f::normalized(ray.d));
 	return true;
 }

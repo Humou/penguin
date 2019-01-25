@@ -1,6 +1,7 @@
 #include "Aggregate.h"
 
-Aggregate::Aggregate()
+Aggregate::Aggregate(std::shared_ptr<BRDF> brdf)
+	:Surface(brdf)
 {
 }
 

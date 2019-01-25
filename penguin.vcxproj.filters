@@ -48,7 +48,10 @@
     <ClCompile Include="algebra\Camera.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="CAMERA.CPP">
+    <ClCompile Include="BRDF\BRDF.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="BRDF\ModifiedPhong.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -81,6 +84,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="algebra\Camera.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="BRDF\BRDF.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="BRDF\ModifiedPhong.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

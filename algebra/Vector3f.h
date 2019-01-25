@@ -50,18 +50,24 @@ public:
 
 	}
 
+	/*void operator-() {
+		x = -x;
+		y = -y;
+		z = -z;
+	}*/
 	float lengthSquared() const;
 	float length() const;
 	
 	//static fuction
-	static Vector3f normalize(const Vector3f &a);
+	void normalize();
 
 	static float dot(const Vector3f &a, const Vector3f &b);
 	static Vector3f cross(const Vector3f &a, const Vector3f &b);
+	static Vector3f normalized(const Vector3f &v);
 
 	float x, y, z;
 };
-
+Vector3f operator-(float v, const Vector3f &rhs);
 Vector3f operator*(const Vector3f &lhs, float v);
 Vector3f operator*(float v, const Vector3f &rhs);
 

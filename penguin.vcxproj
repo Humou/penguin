@@ -71,7 +71,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)output\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>output\obj\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>.\surface;.\other;.\algebra;$(IncludePath)</IncludePath>
+    <IncludePath>.\BRDF;.\surface;.\other;.\algebra;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -115,7 +115,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="algebra\Camera.cpp" />
-    <ClCompile Include="CAMERA.CPP" />
+    <ClCompile Include="BRDF\BRDF.cpp" />
+    <ClCompile Include="BRDF\ModifiedPhong.cpp" />
     <ClCompile Include="surface\Aggregate.cpp" />
     <ClCompile Include="surface\IntersectInfo.cpp" />
     <ClCompile Include="other\lodepng.cpp" />
@@ -129,6 +130,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="algebra\Camera.h" />
+    <ClInclude Include="BRDF\BRDF.h" />
+    <ClInclude Include="BRDF\ModifiedPhong.h" />
     <ClInclude Include="surface\Aggregate.h" />
     <ClInclude Include="surface\IntersectInfo.h" />
     <ClInclude Include="other\lodepng.h" />
