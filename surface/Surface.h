@@ -9,7 +9,7 @@
 class Surface
 {
 public:
-	Surface(std::shared_ptr<BRDF> brdf, bool isLightSource = false, const Vector3f &e = Vector3f());
+	Surface(std::shared_ptr<BRDF> brdf, bool isLightSource = false, const Vector3f &color = Vector3f(1.0f, 1.0f, 1.0f), const Vector3f &e = Vector3f());
 	virtual ~Surface();
 
 	virtual bool interect(const Ray &ray, std::shared_ptr<IntersectInfo> info) = 0;
@@ -20,5 +20,6 @@ protected:
 	std::shared_ptr<BRDF> brdf;
 	bool isLightSource = false;
 	Vector3f e;
+	Vector3f color;
 };
 

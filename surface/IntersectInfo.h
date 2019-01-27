@@ -18,5 +18,6 @@ public:
 	bool isLightSource = false;
 	Vector3f e;
 	Vector3f p;
+	Vector3f color;
 };
 

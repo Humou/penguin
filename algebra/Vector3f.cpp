@@ -36,7 +36,11 @@ void Vector3f::normalize()
 }
 
 float Vector3f::dot(const Vector3f &a, const Vector3f &b) {
-	return a.x * b.x + a.y * b.y + a.z * b.z;
+	float ret = (a.x * b.x + a.y * b.y + a.z * b.z);
+	if (std::isnan(ret)) {
+		//std::cout << a << "  " << b << std::endl;
+	}
+	return ret;
 }
 
 Vector3f Vector3f::cross(const Vector3f &a, const Vector3f &b) {
@@ -45,6 +49,7 @@ Vector3f Vector3f::cross(const Vector3f &a, const Vector3f &b) {
 
 Vector3f Vector3f::normalized(const Vector3f & v)
 {
+	if (v.length() == 0) return Vector3f();
 	return v/v.length();
 }
 

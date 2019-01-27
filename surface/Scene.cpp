@@ -9,9 +9,9 @@
 Scene::Scene()
 {
 	aggregates = std::make_shared<Aggregate>();
-	std::shared_ptr<Surface> sphere = std::make_shared<Sphere>(Vector3f(0, 0, -0.18), 0.5);
+	std::shared_ptr<Surface> sphere = std::make_shared<Sphere>(Vector3f(0, 0, -0.18), 0.5, std::make_shared<ModifiedPhong>(), true, Vector3f(0.8, 0.2, 0.3));
 
-	std::shared_ptr<Surface> light = std::make_shared<Sphere>(Vector3f(0, 0.2, -0.3), 0.2, std::make_shared<ModifiedPhong>(), true, Vector3f(0.5, 0.5, 0.5));
+	std::shared_ptr<Surface> light = std::make_shared<Sphere>(Vector3f(0, 0.2, -0.3), 0.2, std::make_shared<ModifiedPhong>(), true, Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.5, 0.5, 0.5));
 	aggregates->addSurface(sphere);
 	aggregates->addSurface(light);
 }
@@ -39,6 +39,7 @@ void Scene::render()
 				color += Li(camera.generateRay(s_x, s_y));
 			}
 			camera.setPixel(y, x, color / ns);
+			//std::cout << color<<std::endl;
 		}
 		std::cout << "y: " << y << std::endl;
 	}
@@ -51,7 +52,6 @@ Vector3f Scene::rayTracer(const Ray &ray)
 	std::shared_ptr<IntersectInfo> info = std::make_shared<IntersectInfo>();
 	if (aggregates->interect(ray, info)) {
 		return 0.5 * Vector3f(info->normal.x + 1, info->normal.y + 1, info->normal.z + 1);
-		std::cout << "intersect" << std::endl;
 	}
 	else {
 		Vector3f unit_direction  = ray.d;
@@ -63,14 +63,14 @@ Vector3f Scene::rayTracer(const Ray &ray)
 
 Vector3f Scene::Li(const Ray & ray, int depth)
 {
-	if (depth > 2) return Vector3f(0, 0, 0);
+	if (depth > 3) return Vector3f(0, 0, 0);
 
 	std::shared_ptr<IntersectInfo> info = std::make_shared<IntersectInfo>();
 	if (aggregates->interect(ray, info)) {
 		Ray newRay(info->p, info->wi);
 		if (info->f == 0) return info->e;
-		//std::cout << "intersect" << std::endl;
-		return (info->e + info->f * Li(newRay, depth + 1) / info->pdf);
+		
+		return (info->e + info->color * info->f * Li(newRay, depth + 1) / info->pdf);
 	}
 	return Vector3f(0, 0, 0);
 }

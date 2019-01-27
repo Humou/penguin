@@ -26,7 +26,7 @@ bool Sphere::interect(const Ray & ray, std::shared_ptr<IntersectInfo> info)
 		}
 	}
 
-	if (t <= 0) return false;
+	if (t <= 1e-5) return false;
 
 	if (info->isValid & t >= info->t) return true;
 	//当前交点为最近交点或第一个交点，则需要改变info
@@ -35,10 +35,14 @@ bool Sphere::interect(const Ray & ray, std::shared_ptr<IntersectInfo> info)
 	info->isValid = true;
 	info->normal = (info->p - center);
 	info->normal.normalize();
+	info->color = color;
 	if (isLight()) {
 		info->isLightSource = true;
 		info->e = getEmision();
 	}
+	//std::cout << "ray.o: " << ray.o << " ray.d: " << ray.d << std::endl;
+	//std::cout << "info->p: " << info->p << " center: " << center<<std::endl;
+	//std::cout << "normal: " << info->normal << std::endl;
 	brdf->sample(info->f, info->pdf, info->normal, Vector3f::normalized(ray.d));
 	return true;
 }

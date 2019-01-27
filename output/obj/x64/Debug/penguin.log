@@ -1,21 +1,3 @@
-﻿  Scene.cpp
-e:\project\vsproject\penguin\surface\scene.cpp(12): warning C4305: “参数”: 从“double”到“float”截断
-e:\project\vsproject\penguin\surface\scene.cpp(14): warning C4305: “参数”: 从“double”到“float”截断
-e:\project\vsproject\penguin\surface\scene.cpp(38): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-e:\project\vsproject\penguin\surface\scene.cpp(41): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
-e:\project\vsproject\penguin\surface\scene.cpp(59): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-e:\project\vsproject\penguin\surface\scene.cpp(60): warning C4305: “参数”: 从“double”到“float”截断
-e:\soft_install\vs2015\vc\include\memory(901): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
-  e:\soft_install\vs2015\vc\include\memory(971): note: 参见对正在编译的函数 模板 实例化“std::_Ref_count_obj<_Ty>::_Ref_count_obj<Vector3f,double>(Vector3f &&,double &&)”的引用
-          with
-          [
-              _Ty=Sphere
-          ]
-  e:\soft_install\vs2015\vc\include\memory(971): note: 参见对正在编译的函数 模板 实例化“std::_Ref_count_obj<_Ty>::_Ref_count_obj<Vector3f,double>(Vector3f &&,double &&)”的引用
-          with
-          [
-              _Ty=Sphere
-          ]
-  e:\project\vsproject\penguin\surface\scene.cpp(12): note: 参见对正在编译的函数 模板 实例化“std::shared_ptr<Sphere> std::make_shared<Sphere,Vector3f,double>(Vector3f &&,double &&)”的引用
+﻿  Vector3f.cpp
   penguin.vcxproj -> E:\project\vsProject\penguin\output\x64\Debug\penguin.exe
   penguin.vcxproj -> E:\project\vsProject\penguin\output\x64\Debug\penguin.pdb (Partial PDB)

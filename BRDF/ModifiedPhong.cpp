@@ -1,9 +1,10 @@
+#include<algorithm>
 #include "ModifiedPhong.h"
 
 
 
 ModifiedPhong::ModifiedPhong()
-	:u(0, 1), p_d(0.4), p_s(0.4), k_s(0.2)
+	:u(0, 1), p_d(0.4), p_s(0.4), k_s(0.2),n(10)
 {
 }
 
@@ -33,9 +34,17 @@ Vector3f ModifiedPhong::sampleDiffuse(float &f, float &pdf, const Vector3f &norm
 	Vector3f wi(x, y, z);
 	wi.normalize();
 
-	float costheta = Vector3f::dot(normal, wi);
-	f = 1 / PI * costheta;
+	float costheta = std::max(Vector3f::dot(normal, wi), 0.0f);
+	f = (1 / PI) * costheta;
 	pdf = p_d * f;
+	if (std::isnan(f)) {
+		//std::cout << "wi: " << wi << std::endl;
+		//std::cout << "diffuse f: " << f << std::endl;
+		//std::cout << "1/PI:" << 1 / PI << std::endl;
+		//std::cout << "costheta: " << costheta << std::endl;
+	}
+	if (std::isnan(pdf)) std::cout << "diffuse pdf: " << pdf << std::endl;
+	//if(std::isnan(wi.x) || std::isnan(wi.y) || std::isnan(wi.z))std::cout << "diffuse wi: " << wi << std::endl;
 	return wi;
 }
 
@@ -49,13 +58,16 @@ Vector3f ModifiedPhong::sampleSpecular(float &f, float &pdf, const Vector3f &nor
 	Vector3f wi(x, y, z);
 
 	wi.normalize();
-	//normal.normalize();
-	//wo.normalize();
+	
 	Vector3f reflect = 2 * Vector3f::dot(normal, wi) * normal - wi;
 
-	float cosalpha = Vector3f::dot(0.0 - wo, reflect);
-	float costheta = Vector3f::dot(normal, wi);
-	f = k_s * (n + 2.0) / 2 * PI * pow(cosalpha, n) * cosalpha;
-	pdf = (n + 1.0) / 2 * PI * pow(cosalpha, n);
+	float cosalpha = std::max(Vector3f::dot(0.0 - wo, reflect), 0.0f);
+	float costheta = std::max(Vector3f::dot(normal, wi), 0.0f);
+	f = k_s * ((n + 2.0) / 2 * PI) * pow(cosalpha, n) * cosalpha;
+	pdf = ((n + 1.0) / 2 * PI) * pow(cosalpha, n);
+
+	//if (std::isnan(f)) std::cout << "specular f: " << f << std::endl;
+	//if (std::isnan(pdf)) std::cout << "specular pdf: " << pdf << std::endl;
+	//if (std::isnan(wi.x) || std::isnan(wi.y) || std::isnan(wi.z))std::cout << "specualr wi: " << wi << std::endl;
 	return wi;
 }

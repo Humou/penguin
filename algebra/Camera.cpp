@@ -20,7 +20,8 @@ Ray Camera::generateRay(float s_x, float s_y)
 	float y0 = 2.0 / (height - 1) * s_y - 1.0;
 	
 	Vector3f pos(x0, y0, zNear);
-	return Ray(origin, (pos - origin));
+	Ray ray(origin, (pos - origin));
+	return ray;
 }
 
 void Camera::setPixel(int y, int x, const Vector3f & color)
