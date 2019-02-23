@@ -16,10 +16,14 @@ public:
 	std::shared_ptr<BRDF> getBRDF() { return brdf; }
 	bool isLight() { return isLightSource; }
 	Vector3f getEmision() { return e; }
+
+	int ID;
 protected:
 	std::shared_ptr<BRDF> brdf;
 	bool isLightSource = false;
 	Vector3f e;
 	Vector3f color;
+
+	static int curID;
 };
 

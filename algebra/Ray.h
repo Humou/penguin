@@ -12,4 +12,4 @@ public:
 	Vector3f evaluate(float t) const { return o + t * d; }
 	Vector3f o, d;
 };
-
+std::ostream& operator<<(std::ostream &out, const Ray &r);

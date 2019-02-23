@@ -1,3 +1,25 @@
-﻿  Vector3f.cpp
+﻿  Scene.cpp
+e:\project\vsproject\penguin\surface\scene.cpp(12): warning C4305: “参数”: 从“double”到“float”截断
+e:\project\vsproject\penguin\surface\scene.cpp(14): warning C4305: “参数”: 从“double”到“float”截断
+e:\project\vsproject\penguin\surface\scene.cpp(15): warning C4305: “参数”: 从“double”到“float”截断
+e:\project\vsproject\penguin\surface\scene.cpp(40): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+e:\project\vsproject\penguin\surface\scene.cpp(44): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+e:\project\vsproject\penguin\surface\scene.cpp(62): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+e:\project\vsproject\penguin\surface\scene.cpp(63): warning C4305: “参数”: 从“double”到“float”截断
+e:\project\vsproject\penguin\surface\scene.cpp(70): warning C4305: “参数”: 从“double”到“float”截断
+e:\project\vsproject\penguin\surface\scene.cpp(78): warning C4305: “参数”: 从“double”到“float”截断
+e:\project\vsproject\penguin\surface\scene.cpp(88): warning C4305: “参数”: 从“double”到“float”截断
+e:\soft_install\vs2015\vc\include\memory(901): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+  e:\soft_install\vs2015\vc\include\memory(971): note: 参见对正在编译的函数 模板 实例化“std::_Ref_count_obj<_Ty>::_Ref_count_obj<Vector3f,double,std::shared_ptr<ModifiedPhong>,bool,Vector3f>(Vector3f &&,double &&,std::shared_ptr<ModifiedPhong> &&,bool &&,Vector3f &&)”的引用
+          with
+          [
+              _Ty=Sphere
+          ]
+  e:\soft_install\vs2015\vc\include\memory(971): note: 参见对正在编译的函数 模板 实例化“std::_Ref_count_obj<_Ty>::_Ref_count_obj<Vector3f,double,std::shared_ptr<ModifiedPhong>,bool,Vector3f>(Vector3f &&,double &&,std::shared_ptr<ModifiedPhong> &&,bool &&,Vector3f &&)”的引用
+          with
+          [
+              _Ty=Sphere
+          ]
+  e:\project\vsproject\penguin\surface\scene.cpp(12): note: 参见对正在编译的函数 模板 实例化“std::shared_ptr<Sphere> std::make_shared<Sphere,Vector3f,double,std::shared_ptr<ModifiedPhong>,bool,Vector3f>(Vector3f &&,double &&,std::shared_ptr<ModifiedPhong> &&,bool &&,Vector3f &&)”的引用
   penguin.vcxproj -> E:\project\vsProject\penguin\output\x64\Debug\penguin.exe
   penguin.vcxproj -> E:\project\vsProject\penguin\output\x64\Debug\penguin.pdb (Partial PDB)

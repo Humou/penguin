@@ -19,5 +19,7 @@ public:
 	Vector3f e;
 	Vector3f p;
 	Vector3f color;
+
+	int ID;
 };
 
