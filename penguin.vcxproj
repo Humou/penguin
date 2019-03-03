@@ -117,6 +117,8 @@
     <ClCompile Include="algebra\Camera.cpp" />
     <ClCompile Include="BRDF\BRDF.cpp" />
     <ClCompile Include="BRDF\ModifiedPhong.cpp" />
+    <ClCompile Include="PLANE.CPP" />
+    <ClCompile Include="surface\Plane.cpp" />
     <ClCompile Include="surface\Aggregate.cpp" />
     <ClCompile Include="surface\IntersectInfo.cpp" />
     <ClCompile Include="other\lodepng.cpp" />
@@ -127,11 +129,13 @@
     <ClCompile Include="surface\Surface.cpp" />
     <ClCompile Include="surface\Sphere.cpp" />
     <ClCompile Include="algebra\Vector3f.cpp" />
+    <ClCompile Include="Utility.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="algebra\Camera.h" />
     <ClInclude Include="BRDF\BRDF.h" />
     <ClInclude Include="BRDF\ModifiedPhong.h" />
+    <ClInclude Include="surface\Plane.h" />
     <ClInclude Include="surface\Aggregate.h" />
     <ClInclude Include="surface\IntersectInfo.h" />
     <ClInclude Include="other\lodepng.h" />
@@ -141,6 +145,7 @@
     <ClInclude Include="surface\Surface.h" />
     <ClInclude Include="surface\Sphere.h" />
     <ClInclude Include="algebra\Vector3f.h" />
+    <ClInclude Include="Utility.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,6 +1,8 @@
 #include<random>
+#include<vector>
 
 #include"Ray.h"
+#include<Plane.h>
 #include "Scene.h"
 #include"Sphere.h"
 #include"lodepng.h"
@@ -11,11 +13,37 @@ Scene::Scene()
 	aggregates = std::make_shared<Aggregate>();               //center                radius    brdf                          isLight  color    
 	std::shared_ptr<Surface> sphere = std::make_shared<Sphere>(Vector3f(0, -0.1, -0.5), 0.3, std::make_shared<ModifiedPhong>(), false, Vector3f(0.8, 0.2, 0.3));
 	                                                          //center                 radius    brdf                          isLight color                      emission
-	std::shared_ptr<Surface> light = std::make_shared<Sphere>(Vector3f(-0.4, 0.05, -0.3), 0.1, std::make_shared<ModifiedPhong>(), true, Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.8, 0.8, 0.8));
-	std::shared_ptr<Surface> light1 = std::make_shared<Sphere>(Vector3f(0.4, 0.05, -0.3), 0.1, std::make_shared<ModifiedPhong>(), true, Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.8, 0.8, 0.8));
+	std::shared_ptr<Surface> sphere0 = std::make_shared<Sphere>(Vector3f(-0.4, 0.05, -0.3), 0.1, std::make_shared<ModifiedPhong>(), false, Vector3f(0.1f, 0.3f, 0.8f), Vector3f(0.8, 0.8, 0.8));
+	std::shared_ptr<Surface> sphere1 = std::make_shared<Sphere>(Vector3f(0.4, 0.05, -0.3), 0.1, std::make_shared<ModifiedPhong>(), false, Vector3f(0.2f, 0.8f, 0.2f), Vector3f(0.8, 0.8, 0.8));
+
+	float min_x = -0.9, max_x = 0.9, min_y = -0.9, max_y = 0.9, min_z = -0.9, max_z = -0.2;
+	std::vector<Vector3f> vertices = {
+		Vector3f(min_x, min_y, max_z), Vector3f(max_x, min_y, max_z), Vector3f(max_x, min_y, min_z), Vector3f(min_x, min_y, min_z),
+		Vector3f(min_x, max_y, max_z), Vector3f(max_x, max_y, max_z), Vector3f(max_x, max_y, min_z), Vector3f(min_x, max_y, min_z)
+	};
+	float step = 0.2;
+	Vector3f A = vertices[4], B = vertices[7], C = vertices[6], D = vertices[5];
+	Vector3f mid = (A + B + C + D) / 4;
+	mid.y -= 0.01;
+	Vector3f newA(mid.x - step, mid.y, mid.z + step), newB(mid.x + step, mid.y, mid.z + step),
+		     newC(mid.x + step, mid.y, mid.z - step), newD(mid.x - step, mid.y, mid.z - step);
+	std::shared_ptr<Surface> topWall = std::make_shared<Plane>(vertices[4], vertices[7], vertices[6], vertices[5], false);//top
+	std::shared_ptr<Surface> light = std::make_shared<Plane>(newA, newB, newC, newD);//light
+	std::shared_ptr<Surface> bottomWall = std::make_shared<Plane>(vertices[0], vertices[1], vertices[2], vertices[3], false);//bottom
+	std::shared_ptr<Surface> leftWall = std::make_shared<Plane>(vertices[0], vertices[3], vertices[7], vertices[4], false);//left
+	std::shared_ptr<Surface> rightWall = std::make_shared<Plane>(vertices[1], vertices[2], vertices[6], vertices[5], false);//right
+	std::shared_ptr<Surface> backWall = std::make_shared<Plane>(vertices[3], vertices[2], vertices[6], vertices[7], false);//back
+
 	aggregates->addSurface(sphere);
+	aggregates->addSurface(sphere0);
+	aggregates->addSurface(sphere1);
+
+	aggregates->addSurface(topWall);
 	aggregates->addSurface(light);
-	aggregates->addSurface(light1);
+	aggregates->addSurface(bottomWall);
+	aggregates->addSurface(leftWall);
+	aggregates->addSurface(rightWall);
+	aggregates->addSurface(backWall);
 }
 
 Scene::~Scene()

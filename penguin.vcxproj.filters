@@ -54,6 +54,15 @@
     <ClCompile Include="BRDF\ModifiedPhong.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Utility.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="surface\Plane.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="PLANE.CPP">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="surface\Aggregate.h">
@@ -90,6 +99,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="BRDF\ModifiedPhong.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="surface\Plane.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
