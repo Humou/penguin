@@ -60,7 +60,10 @@
     <ClCompile Include="surface\Plane.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="PLANE.CPP">
+    <ClCompile Include="BRDF\Dielectric.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="surface\Material.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -105,6 +108,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="surface\Plane.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="BRDF\Dielectric.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="surface\Material.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

@@ -64,11 +64,7 @@ public:
 
 	}
 
-	/*void operator-() {
-		x = -x;
-		y = -y;
-		z = -z;
-	}*/
+	float& operator[](unsigned int index);
 	bool hasNaNs()const { return std::isnan(x) | std::isnan(y) | std::isnan(z); }
 	float lengthSquared() const;
 	float length() const;

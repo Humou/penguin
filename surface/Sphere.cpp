@@ -21,6 +21,7 @@ bool Sphere::interect(const Ray & ray, std::shared_ptr<IntersectInfo> info)
 	else {
 		t = (-b - sqrt(discriminant)) / (2 * a);
 		auto t2 = (-b + sqrt(discriminant)) / (2 * a);
+		if (t < 0 && t2 > 0) t = t2;
 		if (t2 > 0 && t2 < t) {
 			t = t2;
 		}
@@ -36,13 +37,13 @@ bool Sphere::interect(const Ray & ray, std::shared_ptr<IntersectInfo> info)
 	info->isValid = true;
 	info->normal = (info->p - center);
 	info->normal.normalize();
-	info->color = color;
+	
 	if (isLight()) {
 		info->isLightSource = true;
 		info->e = getEmision();
 	}
-	info->wi = brdf->sample(info->f, info->pdf, info->normal, Vector3f::normalized(ray.d));
-	info->ID = ID;
- 
+	info->wi = material.sampleDirection(info->normal, 0.0 - Vector3f::normalized(ray.d));
+	info->color = material.color;
+
 	return true;
 }

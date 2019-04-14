@@ -117,7 +117,8 @@
     <ClCompile Include="algebra\Camera.cpp" />
     <ClCompile Include="BRDF\BRDF.cpp" />
     <ClCompile Include="BRDF\ModifiedPhong.cpp" />
-    <ClCompile Include="PLANE.CPP" />
+    <ClCompile Include="BRDF\Dielectric.cpp" />
+    <ClCompile Include="surface\Material.cpp" />
     <ClCompile Include="surface\Plane.cpp" />
     <ClCompile Include="surface\Aggregate.cpp" />
     <ClCompile Include="surface\IntersectInfo.cpp" />
@@ -135,6 +136,8 @@
     <ClInclude Include="algebra\Camera.h" />
     <ClInclude Include="BRDF\BRDF.h" />
     <ClInclude Include="BRDF\ModifiedPhong.h" />
+    <ClInclude Include="BRDF\Dielectric.h" />
+    <ClInclude Include="surface\Material.h" />
     <ClInclude Include="surface\Plane.h" />
     <ClInclude Include="surface\Aggregate.h" />
     <ClInclude Include="surface\IntersectInfo.h" />

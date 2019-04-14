@@ -26,6 +26,13 @@ Vector3f operator/(float v, Vector3f &rhs) {
 	return rhs / v;
 }
 
+float & Vector3f::operator[](unsigned int index)
+{
+	if (index == 0) return x;
+	else if (index == 1) return y;
+	else if (index == 2) return z;
+}
+
 float Vector3f::lengthSquared() const{
 	return x * x + y * y + z * z;
 }

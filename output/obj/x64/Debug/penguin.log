@@ -1,7 +1,38 @@
-﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(936,5): warning MSB8027: Two or more files with the name of PLANE.CPP will produce outputs to the same location. This can lead to an incorrect build result.  The files involved are PLANE.CPP, surface\Plane.cpp.
-  Plane.cpp
-  正在生成代码...
-  正在跳过...(未检测到相关更改)
-  Scene.cpp
+﻿  Scene.cpp
+e:\project\vsproject\penguin\brdf\dielectric.h(17): warning C4305: “初始化”: 从“double”到“float”截断
+e:\project\vsproject\penguin\brdf\dielectric.h(18): warning C4305: “初始化”: 从“double”到“float”截断
+e:\project\vsproject\penguin\brdf\dielectric.h(19): warning C4305: “初始化”: 从“double”到“float”截断
+e:\project\vsproject\penguin\surface\material.h(15): warning C4305: “参数”: 从“double”到“float”截断
+e:\project\vsproject\penguin\surface\material.h(27): warning C4305: “初始化”: 从“double”到“float”截断
+e:\project\vsproject\penguin\surface\scene.cpp(17): warning C4305: “参数”: 从“double”到“float”截断
+e:\project\vsproject\penguin\surface\scene.cpp(19): warning C4305: “参数”: 从“double”到“float”截断
+e:\project\vsproject\penguin\surface\scene.cpp(21): warning C4305: “初始化”: 从“double”到“float”截断
+e:\project\vsproject\penguin\surface\scene.cpp(26): warning C4305: “初始化”: 从“double”到“float”截断
+e:\project\vsproject\penguin\surface\scene.cpp(29): warning C4305: “-=”: 从“double”到“float”截断
+e:\project\vsproject\penguin\surface\scene.cpp(33): warning C4305: “参数”: 从“double”到“float”截断
+e:\project\vsproject\penguin\surface\scene.cpp(37): warning C4305: “参数”: 从“double”到“float”截断
+e:\project\vsproject\penguin\surface\scene.cpp(38): warning C4305: “参数”: 从“double”到“float”截断
+e:\project\vsproject\penguin\surface\scene.cpp(89): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+e:\project\vsproject\penguin\surface\scene.cpp(90): warning C4305: “参数”: 从“double”到“float”截断
+e:\project\vsproject\penguin\surface\scene.cpp(99): warning C4305: “参数”: 从“double”到“float”截断
+e:\project\vsproject\penguin\surface\scene.cpp(107): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+e:\project\vsproject\penguin\surface\scene.cpp(116): warning C4305: “参数”: 从“double”到“float”截断
+e:\project\vsproject\penguin\surface\scene.cpp(125): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+e:\project\vsproject\penguin\surface\scene.cpp(131): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+e:\project\vsproject\penguin\surface\scene.cpp(132): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+e:\project\vsproject\penguin\surface\scene.cpp(142): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+e:\project\vsproject\penguin\surface\scene.cpp(147): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+e:\soft_install\vs2015\vc\include\memory(901): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+  e:\soft_install\vs2015\vc\include\memory(971): note: 参见对正在编译的函数 模板 实例化“std::_Ref_count_obj<_Ty>::_Ref_count_obj<Vector3f,double,Material>(Vector3f &&,double &&,Material &&)”的引用
+          with
+          [
+              _Ty=Sphere
+          ]
+  e:\soft_install\vs2015\vc\include\memory(971): note: 参见对正在编译的函数 模板 实例化“std::_Ref_count_obj<_Ty>::_Ref_count_obj<Vector3f,double,Material>(Vector3f &&,double &&,Material &&)”的引用
+          with
+          [
+              _Ty=Sphere
+          ]
+  e:\project\vsproject\penguin\surface\scene.cpp(17): note: 参见对正在编译的函数 模板 实例化“std::shared_ptr<Sphere> std::make_shared<Sphere,Vector3f,double,Material>(Vector3f &&,double &&,Material &&)”的引用
   penguin.vcxproj -> E:\project\vsProject\penguin\output\x64\Debug\penguin.exe
   penguin.vcxproj -> E:\project\vsProject\penguin\output\x64\Debug\penguin.pdb (Partial PDB)

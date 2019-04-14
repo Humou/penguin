@@ -2,8 +2,8 @@
 
 
 
-Plane::Plane(const Vector3f &V00, const Vector3f &V10, const Vector3f &V11, const Vector3f &V01, bool isLight, const Vector3f &color, const Vector3f &e)
-	:Surface(std::make_shared<ModifiedPhong>(), isLight, color, e), V00(V00), V10(V10), V11(V11), V01(V01)
+Plane::Plane(const Vector3f &V00, const Vector3f &V10, const Vector3f &V11, const Vector3f &V01, Material material)
+	:Surface(material), V00(V00), V10(V10), V11(V11), V01(V01)
 {
 }
 
@@ -26,14 +26,13 @@ bool Plane::interect(const Ray & ray, std::shared_ptr<IntersectInfo> info)
 	info->normal = Vector3f::cross(V10 - V00, V01 - V00);
 	;
 	info->normal.normalize();
-	info->color = color;
+	info->color = material.color;
 	if (isLight()) {
 		info->isLightSource = true;
 		info->e = getEmision();
 	}
-	info->wi = brdf->sample(info->f, info->pdf, info->normal, Vector3f::normalized(ray.d));
-	info->ID = ID;
-
+	info->wi = material.sampleDirection(info->normal, 0.0 - Vector3f::normalized(ray.d));
+	
 	return true;
 }
 

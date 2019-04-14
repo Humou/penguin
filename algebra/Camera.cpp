@@ -1,7 +1,8 @@
 #include <Camera.h>
 #include<lodepng.h>
 Camera::Camera()
-	: origin(0, 0, 0.3), zNear(0.0)
+	: origin(0, 0.0, 0.7), zNear(-0.15),
+	  min_x(-0.92), max_x(0.92), min_y(-0.92), max_y(0.92)
 {
 	image.resize(height);
 	for (int i = 0; i < image.size(); i++) {
@@ -16,12 +17,10 @@ Camera::~Camera()
 
 Ray Camera::generateRay(float s_x, float s_y)
 {
-	float x0 = 2.0 / (width - 1) * s_x - 1.0;
-	float y0 = 2.0 / (height - 1) * s_y - 1.0;
-	
+	float x0 = (max_x - min_x) / (width - 1) * s_x + min_x;
+	float y0 = (max_y - min_y) / (height - 1) * s_y + min_y;
 	Vector3f pos(x0, y0, zNear);
 	Ray ray(origin, (pos - origin));
-	//std::cout << ray << std::endl;
 	return ray;
 }
 

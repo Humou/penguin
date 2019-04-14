@@ -7,6 +7,6 @@ public:
 	BRDF();
 	virtual ~BRDF();
 
-	virtual Vector3f sample(float &f, float &pdf, const Vector3f &normal, const Vector3f &w0) = 0;
+	virtual Vector3f sample(float &f, float &pdf, Vector3f &normal, Vector3f &w0) = 0;
 };
 

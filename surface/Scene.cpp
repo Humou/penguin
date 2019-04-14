@@ -1,6 +1,7 @@
 #include<random>
 #include<vector>
-
+#include<thread>
+#include<Dielectric.h>
 #include"Ray.h"
 #include<Plane.h>
 #include "Scene.h"
@@ -9,14 +10,15 @@
 #include"Vector3f.h"
 
 Scene::Scene()
+	:u(0, 1)
 {
 	aggregates = std::make_shared<Aggregate>();               //center                radius    brdf                          isLight  color    
-	std::shared_ptr<Surface> sphere = std::make_shared<Sphere>(Vector3f(0, -0.1, -0.5), 0.3, std::make_shared<ModifiedPhong>(), false, Vector3f(0.8, 0.2, 0.3));
+	//std::shared_ptr<Surface> sphere = std::make_shared<Sphere>(Vector3f(0.4, -0.5, -0.5), 0.3, std::make_shared<ModifiedPhong>(), false, Vector3f(0.4, 0.2, 0.3), Vector3f(30, 30, 30));
+	std::shared_ptr<Surface> sphere = std::make_shared<Sphere>(Vector3f(0.4, -0.5, -0.3), 0.2, Material(MAT_TYPE::DIFFUSE, false, Vector3f(0.3, 0.3, 0.3)));
 	                                                          //center                 radius    brdf                          isLight color                      emission
-	std::shared_ptr<Surface> sphere0 = std::make_shared<Sphere>(Vector3f(-0.4, 0.05, -0.3), 0.1, std::make_shared<ModifiedPhong>(), false, Vector3f(0.1f, 0.3f, 0.8f), Vector3f(0.8, 0.8, 0.8));
-	std::shared_ptr<Surface> sphere1 = std::make_shared<Sphere>(Vector3f(0.4, 0.05, -0.3), 0.1, std::make_shared<ModifiedPhong>(), false, Vector3f(0.2f, 0.8f, 0.2f), Vector3f(0.8, 0.8, 0.8));
+	std::shared_ptr<Surface> sphere0 = std::make_shared<Sphere>(Vector3f(-0.45, -0.6, -0.6), 0.3, Material(MAT_TYPE::PERFECT_SPECULAR, false, Vector3f(0.3, 0.3, 0.3)));
 
-	float min_x = -0.9, max_x = 0.9, min_y = -0.9, max_y = 0.9, min_z = -0.9, max_z = -0.2;
+	float min_x = -0.9, max_x = 0.9, min_y = -0.9, max_y = 0.9, min_z = -0.9, max_z = 0.6;
 	std::vector<Vector3f> vertices = {
 		Vector3f(min_x, min_y, max_z), Vector3f(max_x, min_y, max_z), Vector3f(max_x, min_y, min_z), Vector3f(min_x, min_y, min_z),
 		Vector3f(min_x, max_y, max_z), Vector3f(max_x, max_y, max_z), Vector3f(max_x, max_y, min_z), Vector3f(min_x, max_y, min_z)
@@ -27,19 +29,21 @@ Scene::Scene()
 	mid.y -= 0.01;
 	Vector3f newA(mid.x - step, mid.y, mid.z + step), newB(mid.x + step, mid.y, mid.z + step),
 		     newC(mid.x + step, mid.y, mid.z - step), newD(mid.x - step, mid.y, mid.z - step);
-	std::shared_ptr<Surface> topWall = std::make_shared<Plane>(vertices[4], vertices[7], vertices[6], vertices[5], false);//top
-	std::shared_ptr<Surface> light = std::make_shared<Plane>(newA, newB, newC, newD);//light
-	std::shared_ptr<Surface> bottomWall = std::make_shared<Plane>(vertices[0], vertices[1], vertices[2], vertices[3], false);//bottom
-	std::shared_ptr<Surface> leftWall = std::make_shared<Plane>(vertices[0], vertices[3], vertices[7], vertices[4], false);//left
-	std::shared_ptr<Surface> rightWall = std::make_shared<Plane>(vertices[1], vertices[2], vertices[6], vertices[5], false);//right
-	std::shared_ptr<Surface> backWall = std::make_shared<Plane>(vertices[3], vertices[2], vertices[6], vertices[7], false);//back
+
+	std::shared_ptr<Surface> light = std::make_shared<Plane>(newA, newB, newC, newD, Material(MAT_TYPE::DIFFUSE, true, Vector3f(0.6, 0.6, 0.6), Vector3f(30, 30, 30)));//light
+	
+	std::shared_ptr<Surface> topWall = std::make_shared<Plane>(vertices[4], vertices[7], vertices[6], vertices[5], Material());//top
+	std::shared_ptr<Surface> bottomWall = std::make_shared<Plane>(vertices[0], vertices[1], vertices[2], vertices[3], Material());//bottom
+	std::shared_ptr<Surface> leftWall = std::make_shared<Plane>(vertices[0], vertices[3], vertices[7], vertices[4], Material(MAT_TYPE::DIFFUSE, false, Vector3f(0.4, 0.0, 0.0)));//left
+	std::shared_ptr<Surface> rightWall = std::make_shared<Plane>(vertices[1], vertices[5], vertices[6], vertices[2], Material(MAT_TYPE::DIFFUSE, false, Vector3f(0.0, 0.4, 0.0)));//right
+	std::shared_ptr<Surface> backWall = std::make_shared<Plane>(vertices[3], vertices[2], vertices[6], vertices[7], Material());//back
 
 	aggregates->addSurface(sphere);
 	aggregates->addSurface(sphere0);
-	aggregates->addSurface(sphere1);
+	//aggregates->addSurface(sphere1);
+	aggregates->addSurface(light);
 
 	aggregates->addSurface(topWall);
-	aggregates->addSurface(light);
 	aggregates->addSurface(bottomWall);
 	aggregates->addSurface(leftWall);
 	aggregates->addSurface(rightWall);
@@ -52,33 +56,28 @@ Scene::~Scene()
 
 void Scene::render()
 {
-	std::default_random_engine e;
-	std::uniform_real_distribution<float> u(0, 1);
-	int ns = 100;
-	int width = camera.getWidth(), height = camera.getHeight();
-	//遍历所有像素，将像素点转换为对应的屏幕坐标，再将屏幕坐标变换到[-1, 1]
-	for (int y = 0; y < height; y++)
-	{
-		for (int x = 0; x < width; x++) {
-			Vector3f color;
-			//对同一个像素采样多个点
-			for (int i = 0; i < ns; i++) {
-				float r1 = 2 * u(e) - 1;
-				float r2 = 2 * u(e) - 1;
-				float s_x = (x + 0.5) + r1, s_y = (y + 0.5) + r2;
-				color += Li(camera.generateRay(s_x, s_y));
-			}
-			
-			camera.setPixel(y, x, color / ns);
-			//std::cout << color<<std::endl;
-		}
-		std::cout << "y: " << y << std::endl;
+	int cpuCoreNum = std::thread::hardware_concurrency() - 1;
+	std::cout << "cpuCoreNum: " << cpuCoreNum << std::endl;
+	std::cout << "ns: " << ns << std::endl;
+	int blockNum = camera.getHeight()/cpuCoreNum;
+	std::vector<std::thread*> threads;
+
+	for (int i = 0; i < cpuCoreNum; i++) {
+		int rowStart = i * blockNum;
+		int rowEnd = (i + 1) * blockNum;
+		if (i == cpuCoreNum - 1) rowEnd = camera.getHeight();
+		auto thread = new std::thread(&Scene::caculatePxiel, this, rowStart, rowEnd);
+		threads.push_back(thread);
 	}
 
-	camera.saveToImage("./output/images/sphere.png");
+	for (int i = 0; i < cpuCoreNum; i++)
+		threads[i]->join();
+
+	std::string fileName = "./output/images/sphere_" + std::to_string(ns) + ".png";
+	camera.saveToImage(fileName);
 }
 
-Vector3f Scene::rayTracer(const Ray &ray)
+Vector3f Scene::pathTracer(const Ray &ray)
 {
 	std::shared_ptr<IntersectInfo> info = std::make_shared<IntersectInfo>();
 	if (aggregates->interect(ray, info)) {
@@ -94,26 +93,68 @@ Vector3f Scene::rayTracer(const Ray &ray)
 
 Vector3f Scene::Li(const Ray & ray, int depth)
 {
-	if (depth > 3) {
-		return Vector3f(0.2, 0.2, 0.2);
-		//std::cout << "depth > 3" << std::endl;
-		//return Vector3f(0.0, 0.0, 0.0);
-	}
-
 	std::shared_ptr<IntersectInfo> info = std::make_shared<IntersectInfo>();
 
 	if (aggregates->interect(ray, info)) {
-		info->p += 0.001 * info->wi;
+		info->p += 0.001 * info->normal;
 		Ray newRay(info->p, info->wi);
-		if (info->f == 0) return info->e;
-		//std::cout << "info->e: " << info->e << " info->color: " << info->color << " info->f: " << info->f << " info->pdf: " << info->pdf << std::endl;
-		//std::cout << "Li: " << Li(newRay, depth + 1) << std::endl;
-		//std::cout <<"oldRay: "<<ray<< " newRay: " << newRay << std::endl;
-		//std::cout << "depth: "<<depth<<"info->ID: " << info->ID << std::endl;
-		return (info->e + info->color * info->f * Li(newRay, depth + 1) / info->pdf);
+
+		if (depth >= 5) {
+			auto colour = info->color;
+			double p = colour.x>colour.y && colour.x>colour.z ? colour.x : colour.y>colour.z ? colour.y : colour.z;
+			double rnd = u(e);
+			if (rnd < p * 0.9) {
+				info->color = colour * (0.9 / p);
+			}
+			else {
+				return info->e;
+			}
+		}
+		return info->e + (info->color * Li(newRay, depth + 1));
 	}
-   //if(depth > 1)std::cout << "depth: " << depth << std::endl;
+
 	return Vector3f(0.2, 0.2, 0.2);
-	//return Vector3f(0.0, 0.0, 0.0);
+}
+
+void Scene::caculatePxiel(int rowStart, int rowEnd)
+{
+	std::default_random_engine e;
+	std::uniform_real_distribution<float> u(0, 1);
+	float exposure = 0.5;
+	int regionNum = 4;
+	float regionStep = 1.0 / (regionNum);
+	int width = camera.getWidth(), height = camera.getHeight();
+
+	for (int y = rowStart; y < rowEnd; y++) {
+		for (int x = 0; x < width; x++) {
+			Vector3f color;
+			float s_x = (x + 0.5), s_y = (y + 0.5);
+			float left_x = s_x - (regionStep * regionNum / 2.0), bottom_y = s_y - (regionStep * regionNum / 2.0);
+			//stratified sampling
+			for (int row = 0; row < regionNum; row++)
+				for (int col = 0; col < regionNum; col++) {
+					float corner_x = left_x + regionStep * col;
+					float corner_y = bottom_y + regionStep * row;
+					Vector3f sampleColor;
+					for (int i = 0; i < ns; i++) {
+						float r1 = u(e), r2 = u(e);
+						float sample_x = corner_x + r1 * regionStep, sample_y = corner_y + r2 * regionStep;
+						sampleColor += Li(camera.generateRay(sample_x, sample_y)) / ns;
+					}
+
+					color += sampleColor;
+				}
+			color = color / (regionNum * regionNum);
+			//tone mapping
+			//color = 0 - color * exposure;
+			//color = Vector3f(1.0, 1.0, 1.0) - Vector3f(std::exp(color.x), std::exp(color.y), std::exp(color.z));
+
+			color = color / (color + Vector3f(1, 1, 1));
+			camera.setPixel(y, x, color);
+		}
+		if(y % 10 == 0)std::cout << "thread: " << std::this_thread::get_id() << " y: " << y<<" start: "<<rowStart<<" end: "<<rowEnd<<std::endl;
+	}
+		
+		
 }
 
