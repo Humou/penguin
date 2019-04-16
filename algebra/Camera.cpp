@@ -1,7 +1,7 @@
 #include <Camera.h>
 #include<lodepng.h>
 Camera::Camera()
-	: origin(0, 0.0, 0.7), zNear(-0.15),
+	: origin(0, 0.0, 0.4), zNear(-0.15),
 	  min_x(-0.92), max_x(0.92), min_y(-0.92), max_y(0.92)
 {
 	image.resize(height);

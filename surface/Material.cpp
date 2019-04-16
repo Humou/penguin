@@ -109,7 +109,7 @@ Vector3f Material::sampleDielectric(Vector3f & normal, Vector3f & w0)
 			Vector3f wi = (0 - w0) - normal * 2 * Vector3f::dot(normal, 0 - w0);
 			wi.normalize();
 			float R = schlick(Vector3f::dot(w0, normal));
-			color = Vector3f(R, R, R) / prob;
+			//color = Vector3f(R, R, R) / prob;
 			return wi;
 		}
 		else {
@@ -117,7 +117,7 @@ Vector3f Material::sampleDielectric(Vector3f & normal, Vector3f & w0)
 			Vector3f wi = (0 - w0) - N * 2 * Vector3f::dot(N, 0 - w0);
 			wi.normalize();
 			float R = schlick(Vector3f::dot(w0, N));
-			color = Vector3f(R, R, R) / prob;
+			//color = Vector3f(R, R, R) / prob;
 			return wi;
 		}
 		
@@ -149,7 +149,7 @@ Vector3f Material::sampleDielectric(Vector3f & normal, Vector3f & w0)
 			R = 1 - schlick(Vector3f::dot(w0, N));
 			std::swap(n1, n2);
 		}
-		color = Vector3f(R, R, R) / (1.0 - prob);
+		//color = Vector3f(R, R, R) / (1.0 - prob);
 		return t;
 	}
 }

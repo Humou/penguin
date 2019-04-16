@@ -14,11 +14,11 @@ Scene::Scene()
 {
 	aggregates = std::make_shared<Aggregate>();               //center                radius    brdf                          isLight  color    
 	//std::shared_ptr<Surface> sphere = std::make_shared<Sphere>(Vector3f(0.4, -0.5, -0.5), 0.3, std::make_shared<ModifiedPhong>(), false, Vector3f(0.4, 0.2, 0.3), Vector3f(30, 30, 30));
-	std::shared_ptr<Surface> sphere = std::make_shared<Sphere>(Vector3f(0.4, -0.5, -0.3), 0.2, Material(MAT_TYPE::DIFFUSE, false, Vector3f(0.3, 0.3, 0.3)));
+	std::shared_ptr<Surface> sphere = std::make_shared<Sphere>(Vector3f(0.4, -0.5, -0.3), 0.2, Material(MAT_TYPE::DIELECTRIC, false, Vector3f(2.5, 2.5, 2.5)));
 	                                                          //center                 radius    brdf                          isLight color                      emission
-	std::shared_ptr<Surface> sphere0 = std::make_shared<Sphere>(Vector3f(-0.45, -0.6, -0.6), 0.3, Material(MAT_TYPE::PERFECT_SPECULAR, false, Vector3f(0.3, 0.3, 0.3)));
+	std::shared_ptr<Surface> sphere0 = std::make_shared<Sphere>(Vector3f(-0.45, -0.6, -0.6), 0.3, Material(MAT_TYPE::PERFECT_SPECULAR, false, Vector3f(2.5, 2.5, 2.5)));
 
-	float min_x = -0.9, max_x = 0.9, min_y = -0.9, max_y = 0.9, min_z = -0.9, max_z = 0.6;
+	float min_x = -0.9, max_x = 0.9, min_y = -0.9, max_y = 0.9, min_z = -0.9, max_z = -0.2;
 	std::vector<Vector3f> vertices = {
 		Vector3f(min_x, min_y, max_z), Vector3f(max_x, min_y, max_z), Vector3f(max_x, min_y, min_z), Vector3f(min_x, min_y, min_z),
 		Vector3f(min_x, max_y, max_z), Vector3f(max_x, max_y, max_z), Vector3f(max_x, max_y, min_z), Vector3f(min_x, max_y, min_z)
@@ -30,12 +30,12 @@ Scene::Scene()
 	Vector3f newA(mid.x - step, mid.y, mid.z + step), newB(mid.x + step, mid.y, mid.z + step),
 		     newC(mid.x + step, mid.y, mid.z - step), newD(mid.x - step, mid.y, mid.z - step);
 
-	std::shared_ptr<Surface> light = std::make_shared<Plane>(newA, newB, newC, newD, Material(MAT_TYPE::DIFFUSE, true, Vector3f(0.6, 0.6, 0.6), Vector3f(30, 30, 30)));//light
-	
+	//std::shared_ptr<Surface> light = std::make_shared<Plane>(newA, newB, newC, newD, Material(MAT_TYPE::DIFFUSE, true, Vector3f(0.6, 0.6, 0.6), Vector3f(30, 30, 30)));//light
+	std::shared_ptr<Surface> light = std::make_shared<Sphere>(Vector3f(0., 0.95, 0), 0.15, Material(MAT_TYPE::DIFFUSE, true, Vector3f(0.6, 0.6, 0.6), Vector3f(30, 30, 30)));
 	std::shared_ptr<Surface> topWall = std::make_shared<Plane>(vertices[4], vertices[7], vertices[6], vertices[5], Material());//top
 	std::shared_ptr<Surface> bottomWall = std::make_shared<Plane>(vertices[0], vertices[1], vertices[2], vertices[3], Material());//bottom
 	std::shared_ptr<Surface> leftWall = std::make_shared<Plane>(vertices[0], vertices[3], vertices[7], vertices[4], Material(MAT_TYPE::DIFFUSE, false, Vector3f(0.4, 0.0, 0.0)));//left
-	std::shared_ptr<Surface> rightWall = std::make_shared<Plane>(vertices[1], vertices[5], vertices[6], vertices[2], Material(MAT_TYPE::DIFFUSE, false, Vector3f(0.0, 0.4, 0.0)));//right
+	std::shared_ptr<Surface> rightWall = std::make_shared<Plane>(vertices[1], vertices[5], vertices[6], vertices[2], Material(MAT_TYPE::DIFFUSE, false, Vector3f(0.0, 0.0, 0.4)));//right
 	std::shared_ptr<Surface> backWall = std::make_shared<Plane>(vertices[3], vertices[2], vertices[6], vertices[7], Material());//back
 
 	aggregates->addSurface(sphere);
@@ -96,7 +96,7 @@ Vector3f Scene::Li(const Ray & ray, int depth)
 	std::shared_ptr<IntersectInfo> info = std::make_shared<IntersectInfo>();
 
 	if (aggregates->interect(ray, info)) {
-		info->p += 0.001 * info->normal;
+		//info->p += 0.001 * info->normal;
 		Ray newRay(info->p, info->wi);
 
 		if (depth >= 5) {

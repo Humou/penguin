@@ -25,7 +25,7 @@ public:
 	std::uniform_real_distribution<float> u;
 
 	float R0 = 0.8;
-	float prob = 0.5;
+	float prob = 0.3;
 	float n1 = 1;
 
 	bool isLight = false;
